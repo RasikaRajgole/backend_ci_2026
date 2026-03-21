@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - ci-branch
+  pull_request:
+    branches:
+      - ci-branch
 
 jobs:
   build:
@@ -17,4 +20,4 @@ jobs:
           node-version: 22
 
       - run: npm install
-      - run: npm test   # or npm start
+      - run: npm test
