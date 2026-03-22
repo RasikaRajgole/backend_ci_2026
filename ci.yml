@@ -1,0 +1,41 @@
+name: CI - DevOps AI Tool
+
+on:
+  push:
+    branches:
+      - ci-branch
+  pull_request:
+    branches:
+      - ci-branch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      # 🔧 Fix permissions (important)
+      - name: Fix jest permission
+        run: chmod +x ./node_modules/.bin/jest
+
+      # ✅ Run tests using npx
+      - name: Run tests
+        run: npx jest --coverage
+
+      - name: Build application
+        run: npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-artifact
+          path: dist/
