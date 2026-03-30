@@ -4,10 +4,9 @@ metadata:
   name: nginx-service
   namespace: dec-2025-ns
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: nginx
   ports:
     - port: 80
       targetPort: 80
-      nodePort: 30090
